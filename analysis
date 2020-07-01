@@ -187,6 +187,6 @@ tapply(STARdata$hsgrad[STARdata$race == "White"],
 ##          0          1          2          3          4 
 ## 0.13804217 0.06111111 0.09706514 0.12804878 0.11859053
 ##
-## White students still graduate at a similarly higher rate 
+## White students still graduate at a similar higher rate 
 ## even when students are assigned to small class sizes for
 ## all four observed years
