@@ -1,0 +1,80 @@
+STARdata <- read.csv(file.choose())
+View(STARdata)
+summary(STARdata)
+dim(STARdata)
+
+##Not an ideal solution, but it worked...Figure out how to do this better.
+STARdata$kinder <- ifelse(STARdata$classtype == "1", "small", 
+                          ifelse(STARdata$classtype == "2" & STARdata$classtype != "1", "regular", "large"))
+
+STARdata$race <- as.factor(STARdata$race)
+levels(STARdata$race)[1] <- "white"
+levels(STARdata$race)[2] <- "black"
+levels(STARdata$race)[4] <- "Hispanic"
+levels(STARdata$race)[c(3,5,6)] <- "others"
+
+STAR.small <- subset(STARdata, subset = (STARdata$kinder == "small"))
+summary(STAR.small)
+
+STAR.reg <- subset(STARdata, subset = (STARdata$kinder == "regular"))
+summary(STAR.reg)
+
+STAR.large <- subset(STARdata, subset = (STARdata$kinder == "large"))
+summary(STAR.large)
+
+mean(STAR.small$g4math, na.rm = TRUE) - 
+  mean(STAR.reg$g4math, na.rm = TRUE)
+##On average, students in small classes (mean = ~709.2) performed 0.3 pts lower than their average class size (mean = ~709.5) peers. 
+
+sd(STAR.small$g4math, na.rm = TRUE) 
+sd(STAR.reg$g4math, na.rm = TRUE)
+##sd = 41, 43.5 respectively
+
+quantile(STAR.small$g4math, na.rm = TRUE, probs = seq(0,1,0.1))
+quantile(STAR.small$g4reading, na.rm = TRUE, probs = seq(0,1,0.1))
+
+quantile(STAR.reg$g4math, na.rm = TRUE, probs = seq(0,1,0.1))
+quantile(STAR.reg$g4reading, na.rm = TRUE, probs = seq(0,1,0.1))
+
+quantile(STAR.large$g4math, na.rm = TRUE, probs = seq(0,1,0.1))
+quantile(STAR.large$g4reading, na.rm = TRUE, probs = seq(0,1,0.1))
+
+STARdata$yearssmall <- as.factor(STARdata$yearssmall)
+STARdata$kinder <- as.factor(STARdata$kinder)
+
+prop.table(table(STARdata$yearssmall, STARdata$kinder))
+
+##compare by years small
+tapply(STARdata$g4math, STARdata$yearssmall, mean, na.rm = TRUE)
+tapply(STARdata$g4math, STARdata$yearssmall, median, na.rm = TRUE)
+
+quantile(STARdata$g4math, na.rm = TRUE, probs = seq(0,1,.1)) #checing significance of dif by percentiles
+
+tapply(STARdata$g4reading, STARdata$yearssmall, mean, na.rm = TRUE)
+tapply(STARdata$g4reading, STARdata$yearssmall, median, na.rm = TRUE)
+
+quantile(STARdata$g4reading, na.rm = TRUE, probs = seq(0,1,.1)) 
+
+##compare by race
+tapply(STARdata$g4math, STARdata$race, mean, na.rm = TRUE)
+tapply(STARdata$g4math, STARdata$race, median, na.rm = TRUE)
+
+tapply(STARdata$g4reading, STARdata$race, mean, na.rm = TRUE)
+tapply(STARdata$g4reading, STARdata$race, median, na.rm = TRUE)
+
+tapply(STAR.reg$g4math, STAR.reg$race, mean, na.rm = TRUE)
+tapply(STAR.reg$g4math, STAR.reg$race, median, na.rm = TRUE)
+
+tapply(STAR.small$g4math, STAR.small$race, mean, na.rm = TRUE)
+tapply(STAR.small$g4math, STAR.small$race, median, na.rm = TRUE)
+##class size imporved median scores for "other" minorities by 14.5, but decreased median scores for Blacs by 3.5 points
+
+tapply(STAR.reg$g4reading, STAR.reg$race, mean, na.rm = TRUE)
+tapply(STAR.reg$g4reading, STAR.reg$race, median, na.rm = TRUE)
+
+tapply(STAR.small$g4reading, STAR.small$race, mean, na.rm = TRUE)
+tapply(STAR.small$g4reading, STAR.small$race, median, na.rm = TRUE)
+##Small class size improved reading scores for "other" minority students by a median of 19.5, however, Black students only saw a median increase of 4.5
+
+prop.table(table(STARdata$kinder, STARdata$hsgrad))
+prop.table(table(STARdata$yearssmall, STARdata$hsgrad))
