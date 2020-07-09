@@ -189,4 +189,6 @@ tapply(STARdata$hsgrad[STARdata$race == "White"],
 ##
 ## White students still graduate at a similar higher rate 
 ## even when students are assigned to small class sizes for
-## all four observed years
+## all four observed years. Perhaps this is because teachers
+## bias their attention towards White students, which is a 
+## known factor in student outcomes.
