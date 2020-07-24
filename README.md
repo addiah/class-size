@@ -1,5 +1,5 @@
 # class-size
-Brief analysis of impact of class size in kindergarten through grade four on students' test scores.
+Brief analysis of impact of class size in kindergarten through grade four on test scores.
 
 Completed independently as a part of the exercises from Chapter 2 in Quantitative Social Science: An Introduction.
 
